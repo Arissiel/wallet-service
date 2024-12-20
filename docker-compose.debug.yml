@@ -1,0 +1,33 @@
+services:
+  db:
+    image: postgres:15  # Используем официальный образ PostgreSQL
+    container_name: wallet_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres        # Имя пользователя базы данных
+      POSTGRES_PASSWORD: mydifficultnewpassword # Пароль базы данных
+      POSTGRES_DB: wallet_db      # Имя базы данных
+    ports:
+      - "5432:5432"  # Пробрасываем порт для локального доступа
+    volumes:
+      - db_data:/var/lib/postgresql/data # Храним данные базы на хосте
+
+  app:
+    build:
+      context: .          # Сборка Dockerfile из текущей директории
+      dockerfile: Dockerfile
+    container_name: wallet_service
+    restart: always
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_USER=user
+      - DB_PASSWORD=password
+      - DB_NAME=wallet_db
+    ports:
+      - "8080:8080"       # Пробрасываем порт для Go-приложения
+    depends_on:
+      - db                # Контейнер app зависит от db
+
+volumes:
+  db_data:
