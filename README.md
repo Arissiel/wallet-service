@@ -56,7 +56,7 @@ Body:
 Сначала клонируйте репозиторий на ваш локальный компьютер:
 
 ```bash
-git clone https://github.com/Arissiel/Wallet-Service
+git clone https://github.com/Arissiel/wallet-service
 ```
 
 ### 2. Переменные окружения
